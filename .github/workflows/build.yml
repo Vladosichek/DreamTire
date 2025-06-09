@@ -10,7 +10,7 @@ on:
 jobs:
   sonarqube:
     name: SonarCloud Analysis
-    runs-on: windows-latest
+    runs-on: ubuntu-latest  # зміна тут
 
     steps:
       - uses: actions/checkout@v4
@@ -21,7 +21,7 @@ jobs:
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '17'  # або інша версія, яка у тебе використовується
+          java-version: '17'
 
       - name: Build and analyze with Maven
         working-directory: ./Back-End/demo
