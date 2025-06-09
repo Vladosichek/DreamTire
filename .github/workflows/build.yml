@@ -1,4 +1,5 @@
 name: Build and Analyze with SonarCloud
+
 on:
   push:
     branches:
@@ -10,24 +11,22 @@ jobs:
   sonarqube:
     name: SonarCloud Analysis
     runs-on: windows-latest
+
     steps:
       - uses: actions/checkout@v4
         with:
-          fetch-depth: 0
+          fetch-depth: 0  # важливо для Sonar, щоб бачити всю git-історію
 
       - name: Set up JDK
         uses: actions/setup-java@v3
         with:
           distribution: 'temurin'
-          java-version: '17'  # або інша, якщо ти використовуєш іншу версію Java
+          java-version: '17'  # або інша версія, яка у тебе використовується
 
-      - name: Build with Maven
+      - name: Build and analyze with Maven
         working-directory: ./Back-End/demo
-        run: mvn clean verify -DskipTests
-
-      - name: SonarCloud Scan
-        uses: SonarSource/sonarqube-scan-action@v5
-        with:
-          projectBaseDir: ./Back-End/demo
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        run: mvn clean verify sonar:sonar ^
+          -Dsonar.projectKey=Vladosichek_DreamTire ^
+          -Dsonar.organization=vladosichek ^
+          -Dsonar.host.url=https://sonarcloud.io ^
+          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
