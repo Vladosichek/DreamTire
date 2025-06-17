@@ -16,7 +16,7 @@ public class BookingRequestDTO {
     private Float cost;
     private Float discount;
     private String description;
-    private Status status; // Припускаю, Status — enum
+    private Status status;
     private List<SessionServiceItemDTO> services;
 
     public BookingRequestDTO() {}
